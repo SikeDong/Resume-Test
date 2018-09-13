@@ -1,0 +1,81 @@
+.resume{
+    height:815px;
+    width:750px;
+    border:2px solid #000;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin:0 auto;
+}
+
+ .title h1{
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+ .title h2{
+    font-size: 12px;
+    font-weight: normal;
+    text-decoration: underline;
+    margin-top: 0px;
+ }
+
+ body{
+    font-family: 'Times New Roman';
+    font-size: 12px;
+}
+
+ h3{
+    font-size: 12px;
+    border-bottom-style: solid;
+    border-bottom-color: #000;
+    border-bottom-width: 1px; 
+    margin-bottom: 0px;
+    margin-top: 10px;
+ }
+
+ h4,h6, .course, .date, .major{
+     margin-top: 0px;
+ }
+
+ h4,h6, h5, .major{ 
+    margin-bottom: 0px;
+ }
+ 
+ h3, h6, h5, .intern, .pro{
+    font-weight: bold;
+}
+
+.kinds, .acname, .major, .position, .note, .pro{
+    position: absolute;
+}
+
+ .date{
+    margin-left: 600px;
+ }
+
+ .skill, .act{
+    margin-left: 120px;
+ }
+
+.note{
+    margin-left: 80px;
+    font-style: italic;
+}
+
+ .des{
+     margin-bottom: 5px;
+ }
+
+ h5{
+    margin-top: 8px;
+ }
+
+ h6{
+    font-size: 12px;     
+    font-style: italic;
+ }
+
+
+
+ 
