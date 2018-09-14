@@ -33,7 +33,7 @@ class ResumeTestCase(unittest.TestCase):
         assert project_text == 'ACADEMIC PROJECTS', "can't find project text"
 
     def test_education_number(self):
-        education_number = driver.find_element_by_css_selector('.educations h5')
+        education_number = len(driver.find_elements_by_css_selector('.educations h5'))
         assert education_number >= 2, "can't find all educations"
 
 if __name__ == "__main__":
