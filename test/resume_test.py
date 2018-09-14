@@ -19,7 +19,7 @@ class ResumeTestCase(unittest.TestCase):
         name_text = driver.find_element_by_css_selector('.title h1').text
         assert name_text == 'Sike Dong (Christina)', "can't find name text"
 
-    def test__title_should_exist(self):
+    def xtest__title_should_exist(self):
         education_text = driver.find_element_by_css_selector('.educations h3').text
         assert education_text == 'EDUCATION', "can't find education text"
         
@@ -31,6 +31,10 @@ class ResumeTestCase(unittest.TestCase):
                
         project_text = driver.find_element_by_css_selector('.projects h3').text
         assert project_text == 'ACADEMIC PROJECTS', "can't find project text"
+
+    def test_education_number(self):
+        education_number = driver.find_element_by_css_selector('.educations h5')
+        assert education_number >= 2, "can't find all educations"
 
 if __name__ == "__main__":
     unittest.main() # run all tests
