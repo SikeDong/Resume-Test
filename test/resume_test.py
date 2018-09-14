@@ -4,26 +4,33 @@ from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 driver = webdriver.Remote(
-   command_executor='http://127.0.0.1:4444/wd/hub',
-   desired_capabilities=DesiredCapabilities.CHROME)
+    command_executor='http://127.0.0.1:4444/wd/hub',
+    desired_capabilities=DesiredCapabilities.CHROME)
 
 class ResumeTestCase(unittest.TestCase):
-     def setUp(self):
-         driver.get("http://localhost:8000")
+    def setUp(self):
+        driver.get("http://localhost:8000")
 
-     def tearDown(self):
-         driver.close()
-         pass
+    def tearDown(self):
+        driver.close()
+        pass
 
-     def test_name_should_exist(self):
-         name_text = driver.find_element_by_css_selector('.title h1').text
-         assert name_text == 'Sike Dong (Christina)', "can't find name text"
+    def xtest_name_should_exist(self):
+        name_text = driver.find_element_by_css_selector('.title h1').text
+        assert name_text == 'Sike Dong (Christina)', "can't find name text"
 
-     def xtest_school_should_exist(self):
-         school_selector = 'div.school'
-         school_text = driver.find_element_by_css_selector(school_selector).text
-         assert school_text.lower == 'northeast', "can't find school text"
-
+    def test__title_should_exist(self):
+        education_text = driver.find_element_by_css_selector('.educations h3').text
+        assert education_text == 'EDUCATION', "can't find education text"
+        
+        skill_text = driver.find_element_by_css_selector('.skills h3').text
+        assert skill_text == 'SKILLS & ACTIVITIES', "can't find skill text"
+            
+        experience_text = driver.find_element_by_css_selector('.experience h3').text
+        assert experience_text == 'EXPERIENCE', "can't find experience text"
+               
+        project_text = driver.find_element_by_css_selector('.projects h3').text
+        assert project_text == 'ACADEMIC PROJECTS', "can't find project text"
 
 if __name__ == "__main__":
-      unittest.main() # run all tests
+    unittest.main() # run all tests
