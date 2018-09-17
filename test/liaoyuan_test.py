@@ -22,8 +22,8 @@ class ResumeTestCase(unittest.TestCase):
         driver.find_element_by_css_selector('.gLFyf.gsfi').send_keys("liaoyuan")
         sleep(2)
         driver.find_element_by_css_selector('input[type="submit"]').click()
-        sleep(20)
-       
+        sleep(2)
+        driver.find_element_by_css_selector("a [href='http://liaoyuan.io']").click()
 
 if __name__ == "__main__":
     unittest.main() # run all tests
