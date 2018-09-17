@@ -15,11 +15,11 @@ class ResumeTestCase(unittest.TestCase):
         driver.close()
         pass
 
-    def xtest_name_should_exist(self):
+    def test_name_should_exist(self):
         name_text = driver.find_element_by_css_selector('.title h1').text
         assert name_text == 'Sike Dong (Christina)', "can't find name text"
 
-    def xtest__title_should_exist(self):
+    def test__title_should_exist(self):
         education_text = driver.find_element_by_css_selector('.educations h3').text
         assert education_text == 'EDUCATION', "can't find education text"
         
