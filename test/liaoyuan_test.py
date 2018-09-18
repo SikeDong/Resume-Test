@@ -19,11 +19,18 @@ class ResumeTestCase(unittest.TestCase):
     def test_name_should_exist(self):
         driver.get("http://www.google.com")
         sleep(2)
-        driver.find_element_by_css_selector('.gLFyf.gsfi').send_keys("liaoyuan")
-        sleep(2)
-        driver.find_element_by_css_selector('input[type="submit"]').click()
-        sleep(2)
-        driver.find_element_by_css_selector("a [href='http://liaoyuan.io']").click()
+        driver.find_element_by_css_selector('.gLFyf.gsfi').send_keys("燎原")
+        sleep(3)
+        driver.find_element_by_css_selector('.gLFyf.gsfi').send_keys(Keys.ENTER)
+        sleep(3)
+        
+        while True:
+            try:
+                driver.find_element_by_css_selector('a[href*="https://liaoyuan.io/"]').click()
+                break
+            
+            except:
+                driver.find_element_by_css_selector('#pnnext').click()
 
 if __name__ == "__main__":
     unittest.main() # run all tests
