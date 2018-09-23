@@ -1,5 +1,6 @@
 mport unittest
 from time import sleep
+import Basepage
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -9,11 +10,7 @@ driver = webdriver.Remote(
     command_executor='http://127.0.0.1:4444/wd/hub',
     desired_capabilities=DesiredCapabilities.CHROME)
 
-""" class Basepage(object):
-    def __init__(self,driver):
-        self.driver = driver """
-
-class google_main_page(page):
+class google_main_page(Basepage):
     def get_main_page(self):
         return "http://www.google.com"
     sleep(2)
@@ -31,7 +28,7 @@ class google_main_page(page):
         self.click_search_button()
         googleresultpage(self.browser).wait_for_page()
 
-class google_result_page(page):
+class google_result_page(Basepage):
     def result_on_page(self):
         while True:
             try:
@@ -41,7 +38,7 @@ class google_result_page(page):
             except:
                 driver.find_element_by_css_selector('#pnnext').click()
 
-class liaoyuan_main_page(page):
+class liaoyuan_main_page(Basepage):
     def liaoyuan_open(self):
         ## driver.find_element_by_css_selector('a[href*="https://liaoyuan.io/"]')
         sleep(20)
