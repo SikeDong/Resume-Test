@@ -1,2 +1,2 @@
 #!/bin/bash
-pipenv run python liaoyuan_test.py
+pipenv run python Test.py

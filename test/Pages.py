@@ -16,7 +16,7 @@ class google_main_page(Basepage):
     sleep(2)
 
     def search_input(self, keyword):
-        search_input = find_element_by_css_selector('.gLFyf.gsfi').send_keys(keyword)
+        search_input = find_element_by_css_selector('.gLFyf.gsfi').send_keys("燎原")
     sleep(3)
 
     def click_search_button(self):
@@ -24,7 +24,7 @@ class google_main_page(Basepage):
     sleep(3)
 
     def search(self, keyword):
-        self.search_input(keyword)
+        self.search_input("燎原")
         self.click_search_button()
         googleresultpage(self.browser).wait_for_page()
 
