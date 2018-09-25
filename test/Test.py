@@ -3,7 +3,7 @@ from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from page import GooglePage, LiaoyuanPage
+import page
 
 class TestLiaoyuan(unittest.TestCase):
     def setUp(self):
@@ -14,10 +14,11 @@ class TestLiaoyuan(unittest.TestCase):
 
 
     def test_search_liaoyuan(self):
-        main_page = page.MainPage(self.driver)
-        main_page.search_input = "燎原"
-        main_page.click()
-        result_page = page.GoogleResultPage(self.driver)
+        main_page = google_main_page.get_main_page(self.driver)
+        text_input = google_main_page.search_input("燎原")
+        google_main_page.click_search_button(self.driver)
+        result_page = google_result_page(self.driver)
+        get_liaoyuan = liaoyuan_main_page(self.driver)
 
     def tearDown(self):
         driver.close()
