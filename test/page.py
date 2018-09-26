@@ -1,4 +1,4 @@
-mport unittest
+import unittest
 from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -15,11 +15,11 @@ class google_main_page(Basepage):
     sleep(2)"""
 
     def search_input(self, text):
-        search_input = find_element_by_css_selector('.gLFyf.gsfi').send_keys(text)
+        self.driver.find_element_by_css_selector('.gLFyf.gsfi').send_keys(text)
     sleep(3)
 
     def click_search_button(self):
-        click = find_element_by_css_selector('.gLFyf.gsfi').send_keys(Keys.ENTER)
+        self.driver.find_element_by_css_selector('.gLFyf.gsfi').send_keys(Keys.ENTER)
     sleep(3)
 
     """def search(self, keyword):
@@ -30,11 +30,11 @@ class google_result_page(Basepage):
     def result_on_page(self):
         while True:
             try:
-                driver.find_element_by_css_selector('a[href*="https://liaoyuan.io/"]').click()
+                self.driver.find_element_by_css_selector('a[href*="https://liaoyuan.io/"]').click()
                 break
             
             except:
-                driver.find_element_by_css_selector('#pnnext').click()
+                self.driver.find_element_by_css_selector('#pnnext').click()
 
 class liaoyuan_main_page(Basepage):
     def liaoyuan_open(self):
