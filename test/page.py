@@ -10,10 +10,6 @@ class Basepage(object):
         self.driver = driver
 
 class google_main_page(Basepage):
-    """def get_main_page(self):
-        return "http://www.google.com"
-    sleep(2)"""
-
     def search_input(self, text):
         self.driver.find_element_by_css_selector('.gLFyf.gsfi').send_keys(text)
     sleep(3)
@@ -22,12 +18,8 @@ class google_main_page(Basepage):
         self.driver.find_element_by_css_selector('.gLFyf.gsfi').send_keys(Keys.ENTER)
     sleep(3)
 
-    """def search(self, keyword):
-        self.search_input(keyword)
-        googleresultpage(self.browser).wait_for_page()"""
-
 class google_result_page(Basepage):
-    def result_on_page(self):
+    def search_liaoyuan(self):
         while True:
             try:
                 self.driver.find_element_by_css_selector('a[href*="https://liaoyuan.io/"]').click()
@@ -37,8 +29,13 @@ class google_result_page(Basepage):
                 self.driver.find_element_by_css_selector('#pnnext').click()
 
 class liaoyuan_main_page(Basepage):
-    def liaoyuan_open(self):
-        return "https://liaoyuan.io/"
+    def verify_liaoyuan(self):
+
+        liaoyuan_title = self.driver.find_element_by_css_selector('head > title').text
+        assert liaoyuan_title == '「燎原」', "can't find the title"
+        liaoyuan_logo = self.driver.find_element_by_css_selector('body > div > img .logo')
+        assert liaoyuan_logo == '', "can't find the logo"
+        
         sleep(20)
 
-
+        
