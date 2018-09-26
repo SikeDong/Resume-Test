@@ -34,7 +34,7 @@ class google_result_page(Basepage):
                 break
             
             except:
-                self.driver.find_element_by_css_selector('#pnnext').click()
+                driver.find_element_by_css_selector('#pnnext').click()
 
 class liaoyuan_main_page(Basepage):
     def liaoyuan_open(self):

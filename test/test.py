@@ -21,9 +21,9 @@ class TestLiaoyuan(unittest.TestCase):
         main_page.search_input("燎原")
         main_page.click_search_button()
         result_page = page.google_result_page
-        result_page.result_on_page(self.driver)
+        result_page.result_on_page(self)
         get_liaoyuan = page.liaoyuan_main_page
-        get_liaoyuan.liaoyuan_open(self.driver)
+        get_liaoyuan.liaoyuan_open(self)
 
 if __name__ == "__main__":
     unittest.main() # run all tests
