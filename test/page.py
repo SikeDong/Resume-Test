@@ -10,9 +10,9 @@ class Basepage(object):
         self.driver = driver
 
 class google_main_page(Basepage):
-    def get_main_page(self):
+    """def get_main_page(self):
         return "http://www.google.com"
-    sleep(2)
+    sleep(2)"""
 
     def search_input(self, text):
         search_input = find_element_by_css_selector('.gLFyf.gsfi').send_keys(text)
