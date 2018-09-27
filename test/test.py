@@ -30,6 +30,8 @@ class TestLiaoyuan(unittest.TestCase):
         
         get_liaoyuan = page.liaoyuan_main_page
         get_liaoyuan.verify_liaoyuan(self)
+        get_liaoyuan.click_login_button(self)
+
 
 if __name__ == "__main__":
     unittest.main() # run all tests
