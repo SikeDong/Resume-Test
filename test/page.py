@@ -1,8 +1,11 @@
 import unittest
 from time import sleep
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException
 import page
 
 class Basepage(object):
@@ -30,12 +33,10 @@ class google_result_page(Basepage):
 
 class liaoyuan_main_page(Basepage):
     def verify_liaoyuan(self):
-
-        liaoyuan_title = self.driver.find_element_by_css_selector('head > title').text
-        assert liaoyuan_title == '「燎原」', "can't find the title"
-        liaoyuan_logo = self.driver.find_element_by_css_selector('body > div > img .logo')
-        assert liaoyuan_logo == '', "can't find the logo"
+        try:
+            liaoyuan_url = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'https://liaoyuan.io/')))
+            liaoyuan_title = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'head > title')))
+            liaoyuan_logo = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR,'body > div > img[alt = "「燎原」"')))
         
-        sleep(20)
-
-        
+        except TimeoutException:
+            print("Cannot open Liaoyuan")
