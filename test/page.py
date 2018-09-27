@@ -11,6 +11,9 @@ import page
 class Basepage(object):
     def __init__(self,driver):
         self.driver = driver
+    
+    def wait_locator(locator):
+        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
 
 class google_main_page(Basepage):
     def search_input(self, text):
@@ -32,11 +35,15 @@ class google_result_page(Basepage):
                 self.driver.find_element_by_css_selector('#pnnext').click()
 
 class liaoyuan_main_page(Basepage):
+    url = 'https://liaoyuan.io/'
+    title_locator = (By.CSS_SELECTOR, 'head > title')
+    logo_locator = (By.CSS_SELECTOR,'body > div > img[alt = "「燎原」"')
+
     def verify_liaoyuan(self):
         try:
             liaoyuan_url = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.LINK_TEXT, 'https://liaoyuan.io/')))
-            liaoyuan_title = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'head > title')))
-            liaoyuan_logo = WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR,'body > div > img[alt = "「燎原」"')))
+            liaoyuan_title = wait_locator((self.title_locator))
+            liaoyuan_logo = wait_locator((self.logo_locator))
         
         except TimeoutException:
             print("Cannot open Liaoyuan")
