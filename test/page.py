@@ -36,18 +36,18 @@ class google_result_page(Basepage):
 
 class liaoyuan_main_page(Basepage):
     url = 'https://liaoyuan.io/'
-    title_locator = (By.TAG_NAME, 'head > title')
-    logo_locator = (By.CSS_SELECTOR, 'body > div > img[alt = "「燎原」"')
+    logo_locator = (By.CSS_SELECTOR, 'div > img[alt = "「燎原」"')
     login_button_locator = (By.LINK_TEXT,'登录')
 
     def verify_liaoyuan(self):
         assert self.driver.current_url == 'https://liaoyuan.io/', "cannot find liaoyuan"
-        liaoyuan_title = self.wait_locator(self.title_locator)
+        liaoyuan_title = self.driver.title
+        print(liaoyuan_title)
         liaoyuan_logo = self.wait_locator(self.logo_locator) 
 
     def click_login_button(self):
-        login = self.wait_locator(self.login_button_locator)
-        print(login)
+        self.wait_locator(self.login_button_locator)
+        login = self.driver.find_element(*self.login_button_locator)
         login.click()
         sleep(2)
 
