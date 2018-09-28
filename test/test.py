@@ -25,12 +25,12 @@ class TestLiaoyuan(unittest.TestCase):
         main_page.search_input("燎原")
         main_page.click_search_button()
 
-        result_page = page.google_result_page
-        verify_page = result_page.search_liaoyuan(self)
+        result_page = page.google_result_page(self.driver)
+        verify_page = result_page.search_liaoyuan()
         
-        get_liaoyuan = page.liaoyuan_main_page
-        get_liaoyuan.verify_liaoyuan(self)
-        get_liaoyuan.click_login_button(self)
+        get_liaoyuan = page.liaoyuan_main_page(self.driver)
+        get_liaoyuan.verify_liaoyuan()
+        get_liaoyuan.click_login_button()
 
 
 if __name__ == "__main__":

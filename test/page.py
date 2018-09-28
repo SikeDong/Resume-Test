@@ -12,7 +12,7 @@ class Basepage(object):
     def __init__(self,driver):
         self.driver = driver
     
-    def wait_locator(locator):
+    def wait_locator(self,locator):
         WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
 
 class google_main_page(Basepage):
@@ -42,22 +42,13 @@ class liaoyuan_main_page(Basepage):
 
     def verify_liaoyuan(self):
         assert self.driver.current_url == 'https://liaoyuan.io/',"cannot find liaoyuan"
-        
-        try:
-            liaoyuan_title = wait_locator((self.title_locator))
-            liaoyuan_logo = wait_locator((self.logo_locator))
-        
-        except:
-            print("it is not liaoyuan")
+        liaoyuan_title = self.wait_locator(self.title_locator)
+        liaoyuan_logo = self.wait_locator(self.logo_locator) 
 
     def click_login_button(self):
-        try:
-            login = wait_locator((self.login_button_locator))
-            login.click()
-        
-        except:
-            print("cannot open the login page")
-    
+        login = self.wait_locator(self.login_button_locator)
+        print(login)
+        login.click()
         sleep(2)
 
  ##class login_page(Basepage):
