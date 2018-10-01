@@ -36,6 +36,7 @@ class TestLiaoyuan(unittest.TestCase):
 
     def test_liaoyuan_login(self):
         test_login = page.login_page(self.driver)
+        test_login.verify_login_page()
         test_login.login_username(self.username)
         test_login.login_password(self.password)
         test_login.click_login_button()

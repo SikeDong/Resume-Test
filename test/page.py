@@ -51,9 +51,13 @@ class liaoyuan_main_page(Basepage):
         sleep(2)
 
 class login_page(Basepage):
+    login_url = 'https://liaoyuan.io/login/'
     login_username = (By.LINK_TEXT,'邮箱')
     login_password = (By.LINK_TEXT,'密码')
     liaoyuan_login_button_locator = (By.LINK_TEXT,'登录')
+
+    def verify_login_page(self):
+        assert self.driver.current_url == 'https://liaoyuan.io/login/', 'cannot open login page'
 
     def login_username(self,username):
         ##login.username = self.driver.find_element_by_link_text('邮箱').send_keys(username)
