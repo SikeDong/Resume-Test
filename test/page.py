@@ -57,17 +57,22 @@ class login_page(Basepage):
     liaoyuan_login_button_locator = (By.LINK_TEXT,'登录')
 
     def verify_login_page(self):
+        print(self.driver.current_url)
         assert self.driver.current_url == 'https://liaoyuan.io/login/', 'cannot open login page'
 
     def login_username(self,username):
         ##login.username = self.driver.find_element_by_link_text('邮箱').send_keys(username)
         liaoyuan_login_username = self.wait_locator(self.login_username)
-        assert login.username == "username","不存在该邮箱"
+        liaoyuan_login_username.send_keys(username)
+        assert login.username == "username","不存在该用户名"
+        sleep(2)
         
     def login_password(self,password):
         ##login.password = self.driver.find_element_by_link_text('密码').send_keys(password)
         liaoyuan_login_password = self.wait_locator(self.login_password)
+        liaoyuan_login_password.send_keys(password)
         assert login.password =="password", "密码不正确"
+        sleep(2)
     
     def click_login_button(self):
         self.wait_locator(self.liaoyuan_login_button_locator)
