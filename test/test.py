@@ -15,6 +15,8 @@ class TestLiaoyuan(unittest.TestCase):
         command_executor='http://127.0.0.1:4444/wd/hub',
         desired_capabilities=DesiredCapabilities.CHROME)
         self.driver.get("http://www.google.com")
+        self.username = "dsk932015@gmail.com"
+        self.password = "Dsk930123"
 
     def tearDown(self):
         self.driver.close()
@@ -30,7 +32,13 @@ class TestLiaoyuan(unittest.TestCase):
         
         get_liaoyuan = page.liaoyuan_main_page(self.driver)
         get_liaoyuan.verify_liaoyuan()
-        get_liaoyuan.click_login_button()
+        get_liaoyuan.click_login()
+
+    def test_liaoyuan_login(self):
+        test_login = page.login_page(self.driver)
+        test_login.login_username(self.username)
+        test_login.login_password(self.password)
+        test_login.click_login_button()
 
 
 if __name__ == "__main__":
