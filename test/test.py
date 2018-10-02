@@ -20,7 +20,7 @@ class TestLiaoyuan(unittest.TestCase):
         self.driver.close()
         pass
 
-    def test_search_liaoyuan(self):
+    def xtest_search_liaoyuan(self):
         main_page = page.google_main_page(self.driver)
         main_page.search_input("燎原")
         main_page.click_search_button()
@@ -31,14 +31,18 @@ class TestLiaoyuan(unittest.TestCase):
         get_liaoyuan = page.liaoyuan_main_page(self.driver)
         get_liaoyuan.verify_liaoyuan()
         get_liaoyuan.click_login()
-
+    
     def test_liaoyuan_login(self):
+        self.driver.get("https://liaoyuan.io/login/")
         test_login = page.login_page(self.driver)
-        test_login.verify_login_page()
-        test_login.login_username("dsk932015@gmail.com")
+        test_login.login_username("sike@us.liaoyuan.io")
+        ##assert self.login_liaoyuan_username == "username","不存在该用户名"
         test_login.login_password("Dsk930123")
-        test_login.click_login_button()
+        ##assert self.login_liaoyuan_password == "password", "密码不正确"
+        test_login.click_login_liaoyuan()  
 
+        get_login = page.login_main_page(self.driver)
+        get_login.verify_login_main_page()
 
 if __name__ == "__main__":
     unittest.main() # run all tests
