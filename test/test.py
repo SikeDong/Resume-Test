@@ -35,10 +35,9 @@ class TestLiaoyuan(unittest.TestCase):
     def test_liaoyuan_login(self):
         self.driver.get("https://liaoyuan.io/login/")
         test_login = page.login_page(self.driver)
+        test_login.verify_login_page()
         test_login.login_username("sike@us.liaoyuan.io")
-        ##assert self.login_liaoyuan_username == "username","不存在该用户名"
         test_login.login_password("Dsk930123")
-        ##assert self.login_liaoyuan_password == "password", "密码不正确"
         test_login.click_login_liaoyuan()  
 
         get_login = page.login_main_page(self.driver)
