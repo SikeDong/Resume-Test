@@ -51,18 +51,18 @@ class liaoyuan_main_page(Basepage):
         sleep(2)
     
 class login_page(Basepage):
-    liaoyuan_title = ((By.CSS_SELECTOR,'.ng-binding'))
+    login_page_title = ((By.CSS_SELECTOR,'.ng-binding'))
     liaoyuan_username = (By.CSS_SELECTOR,'input[type="email"]')
     liaoyuan_password = (By.CSS_SELECTOR,'input[type="password"]')
     login_liaoyuan_button = (By.CSS_SELECTOR,'.action-wrapper')
 
     def verify_login_page(self):
-        self.wait_locator(self.liaoyuan_title)
-        login_main_page = self.driver.find_element(*self.liaoyuan_title)
-        ##print("login_page:", self.liaoyuan_title)
+        self.wait_locator(self.login_page_title)
+        login_main_page = self.driver.find_element(*self.login_page_title).text
+        ##print("login_main_page:", login_main_page)
         assert login_main_page == "登录", "cannot open login page"
 
-    def login_username(self,username):
+    def login_username(self,username): 
         self.wait_locator(self.liaoyuan_username)
         login_liaoyuan_username = self.driver.find_element(*self.liaoyuan_username)
         login_liaoyuan_username.send_keys(username)
@@ -77,7 +77,6 @@ class login_page(Basepage):
     def click_login_liaoyuan(self):
         self.wait_locator(self.login_liaoyuan_button)
         login_button = self.driver.find_element(*self.login_liaoyuan_button)
-        print("login button:", login_button)
         login_button.click()
         sleep(2)
 
