@@ -32,9 +32,9 @@ class TestLiaoyuan(unittest.TestCase):
         get_liaoyuan.verify_liaoyuan()
         get_liaoyuan.click_login()
     
-    def test_liaoyuan_login(self):
+    def xtest_liaoyuan_login(self):
         self.driver.get("https://liaoyuan.io/login/")
-        test_login = page.login_page(self.driver)
+        test_login = page.login_liaoyuan(self.driver)
         test_login.verify_login_page()
         test_login.login_username("sike@us.liaoyuan.io")
         test_login.login_password("Dsk930123")
@@ -42,6 +42,14 @@ class TestLiaoyuan(unittest.TestCase):
 
         get_login = page.login_main_page(self.driver)
         get_login.verify_login_main_page()
+    
+    def test_liaoyuan_register(self):
+        self.driver.get("https://liaoyuan.io/signup/")
+        test_signup = page.register_liaoyuan(self.driver)
+        test_signup.verify_signup_page()
+        test_signup.register_username("13817891725@163.com")
+        test_signup.click_signup_liaoyuan()  
+
 
 if __name__ == "__main__":
     unittest.main() # run all tests

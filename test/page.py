@@ -50,7 +50,7 @@ class liaoyuan_main_page(Basepage):
         login.click()
         sleep(2)
     
-class login_page(Basepage):
+class login_liaoyuan(Basepage):
     login_page_title = ((By.CSS_SELECTOR,'.ng-binding'))
     liaoyuan_username = (By.CSS_SELECTOR,'input[type="email"]')
     liaoyuan_password = (By.CSS_SELECTOR,'input[type="password"]')
@@ -85,6 +85,28 @@ class login_main_page(Basepage):
     
     def verify_login_main_page(self):
         assert self.driver.current_url == 'https://liaoyuan.io/profession/', "cannot login"
+
+class register_liaoyuan(Basepage):
+    signup_page_title = ((By.CSS_SELECTOR,'.ng-binding'))
+    signup_username = (By.CSS_SELECTOR,'input[type="email"]')
+    signup_liaoyuan_button = (By.CSS_SELECTOR,'.action-wrapper')
+
+    def verify_signup_page(self):
+        self.wait_locator(self.signup_page_title)
+        login_main_page = self.driver.find_element(*self.signup_page_title).text
+        assert login_main_page == "注册", "cannot open login page"
+    
+    def register_username(self,username): 
+        self.wait_locator(self.signup_username)
+        signup_liaoyuan_username = self.driver.find_element(*self.signup_username)
+        signup_liaoyuan_username.send_keys(username)
+        sleep(2)
+
+    def click_signup_liaoyuan(self):
+        self.wait_locator(self.signup_liaoyuan_button)
+        signup_button = self.driver.find_element(*self.signup_liaoyuan_button)
+        signup_button.click()
+        sleep(2)
 
 
     
