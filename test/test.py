@@ -14,41 +14,25 @@ class TestLiaoyuan(unittest.TestCase):
         self.driver = webdriver.Remote(
         command_executor='http://127.0.0.1:4444/wd/hub',
         desired_capabilities=DesiredCapabilities.CHROME)
-        self.driver.get("http://www.google.com")
+        self.driver.get("http://lancer.host.3rdex.com/#poster")
 
     def tearDown(self):
         self.driver.close()
         pass
 
-    def xtest_search_liaoyuan(self):
-        main_page = page.google_main_page(self.driver)
-        main_page.search_input("燎原")
-        main_page.click_search_button()
+    def xtest_3rdex(self):
+        main_page = page.main_3rdex(self.driver)
+        main_page.verify_3rdex()
+        main_page.click_button()
 
-        result_page = page.google_result_page(self.driver)
-        verify_page = result_page.search_liaoyuan()
-        
-        get_liaoyuan = page.liaoyuan_main_page(self.driver)
-        get_liaoyuan.verify_liaoyuan()
-        get_liaoyuan.click_login()
-    
-    def xtest_liaoyuan_login(self):
-        self.driver.get("https://liaoyuan.io/login/")
-        test_login = page.login_liaoyuan(self.driver)
-        test_login.verify_login_page()
-        test_login.login_username("sike@us.liaoyuan.io")
-        test_login.login_password("Dsk930123")
-        test_login.click_login_liaoyuan()  
+        eos_page = page.ram_eos_page(self.driver)
+        eos_page.verify_ram_eos()
+        eos_page.click_create()
 
-        get_login = page.login_main_page(self.driver)
-        get_login.verify_login_main_page()
-    
-    def test_liaoyuan_register(self):
-        self.driver.get("https://liaoyuan.io/signup/")
-        test_signup = page.register_liaoyuan(self.driver)
-        test_signup.verify_signup_page()
-        test_signup.register_username("13817891725@163.com")
-        test_signup.click_signup_liaoyuan()  
+    def test_3rdex_login(self):
+        self.driver.get("http://lancer.host.3rdex.com/account/create")
+        signup_page = page.signup_3rdex(self.driver)
+        signup_page.verify_signup_page()
 
 
 if __name__ == "__main__":
