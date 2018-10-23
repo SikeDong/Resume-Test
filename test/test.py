@@ -33,6 +33,8 @@ class TestLiaoyuan(unittest.TestCase):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
+        signup_page.name_generation()
+        signup_page.name_text()
 
 
 if __name__ == "__main__":

@@ -49,21 +49,31 @@ class ram_eos_page(Basepage):
     
 class signup_3rdex(Basepage):
     url = 'http://lancer.host.3rdex.com/account/create'
-    signup_page_title = ((By.LINK_TEXT,'New Account'))
-    eos_account_creation = (By.CSS_SELECTOR,'.color-text-primary')
+    signup_page_title = (By.LINK_TEXT,'New Account')
+    eos_account_creation = (By.CSS_SELECTOR, '.color-text-primary')
+    username_generation = (By.CSS_SELECTOR,'.src-Screens-___AccountScreen__random-generation___1g3pF > span')
+    username_textfield = (By.CSS_SELECTOR, '.src-Components-Account-___AccountNameInput__input___1Ym0q')
 
     def verify_signup_page(self):
         assert self.driver.current_url == 'http://lancer.host.3rdex.com/account/create', "cannot find signup page"
         signup_title = self.wait_locator(self.signup_page_title)
         eos_account_exp = self.wait_locator(self.eos_account_creation) 
 
-    """def login_username(self,username): 
-        self.wait_locator(self.liaoyuan_username)
-        login_liaoyuan_username = self.driver.find_element(*self.liaoyuan_username)
-        login_liaoyuan_username.send_keys(username)
+    def name_generation(self): 
+        self.wait_locator(self.username_generation)
+        new_username = self.driver.find_element(*self.username_generation)
+        new_username.click()
         sleep(2)
+
+    def name_text(self):  
+        self.wait_locator(self.username_textfield)
+        name_text_field = self.driver.find_element(*self.username_textfield)
+        print (name_text_field.is_displayed())
+        print(name_text_field.text)
         
-    def login_password(self,password):
+   
+ 
+    """def login_password(self,password):
         self.wait_locator(self.liaoyuan_password)
         login_liaoyuan_password = self.driver.find_element(*self.liaoyuan_password)
         login_liaoyuan_password.send_keys(password)
@@ -102,7 +112,8 @@ class register_liaoyuan(Basepage):
         signup_button = self.driver.find_element(*self.signup_liaoyuan_button)
         signup_button.click()
         sleep(2)"""
-        
+
+
 
 
 
