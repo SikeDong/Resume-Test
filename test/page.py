@@ -53,6 +53,8 @@ class signup_3rdex(Basepage):
     eos_account_creation = (By.CSS_SELECTOR, '.color-text-primary')
     username_generation = (By.CSS_SELECTOR,'.src-Screens-___AccountScreen__random-generation___1g3pF > span')
     username_textfield = (By.CSS_SELECTOR, '.src-Components-Account-___AccountNameInput__input___1Ym0q')
+    checkbox_click = (By.CSS_SELECTOR, "input[type='checkbox']")
+    next_button = (By.CSS_SELECTOR, '.primary-button-container')
 
     def verify_signup_page(self):
         assert self.driver.current_url == 'http://lancer.host.3rdex.com/account/create', "cannot find signup page"
@@ -68,51 +70,44 @@ class signup_3rdex(Basepage):
     def name_text(self):  
         self.wait_locator(self.username_textfield)
         name_text_field = self.driver.find_element(*self.username_textfield)
-        print (name_text_field.is_displayed())
-        print(name_text_field.text)
+        return name_text_field.value
+        sleep(2)
         
-   
- 
-    """def login_password(self,password):
-        self.wait_locator(self.liaoyuan_password)
-        login_liaoyuan_password = self.driver.find_element(*self.liaoyuan_password)
-        login_liaoyuan_password.send_keys(password)
-        sleep(2)
+    def toast_text(self):
+        pass
+
+    def input_name(self, text):
+        # change name input value
+        pass
     
-    def click_login_liaoyuan(self):
-        self.wait_locator(self.login_liaoyuan_button)
-        login_button = self.driver.find_element(*self.login_liaoyuan_button)
-        login_button.click()
-        sleep(2)
-
-class login_main_page(Basepage):
-    url = "https://liaoyuan.io/profession/"
+    def click_next(self):
+        click_next = self.driver.find_element(*self.next_button)
+        click_next.click()
     
-    def verify_login_main_page(self):
-        assert self.driver.current_url == 'https://liaoyuan.io/profession/', "cannot login"
+    def click_agree_term(self):
+        checkbox_selected = self.driver.find_element(*self.checkbox_click)
+        checkbox_selected.click()
+        
+    def term_status(self):
+        checkbox_selected = self.driver.find_element(*self.checkbox_click)
+        #return checkbox_selected.checked?
 
-class register_liaoyuan(Basepage):
-    signup_page_title = ((By.CSS_SELECTOR,'.ng-binding'))
-    signup_username = (By.CSS_SELECTOR,'input[type="email"]')
-    signup_liaoyuan_button = (By.CSS_SELECTOR,'.action-wrapper')
+    """def next_click(self):
+        checkbox_selected = self.driver.find_element(*self.checkbox_click)
+        checkbox_selected.click()
+        self.wait_locator(self.next_button)
+        click_next = self.driver.find_element(*self.next_button)
+        click_next.click()
 
-    def verify_signup_page(self):
-        self.wait_locator(self.signup_page_title)
-        login_main_page = self.driver.find_element(*self.signup_page_title).text
-        assert login_main_page == "注册", "cannot open login page"
-    
-    def register_username(self,username): 
-        self.wait_locator(self.signup_username)
-        signup_liaoyuan_username = self.driver.find_element(*self.signup_username)
-        signup_liaoyuan_username.send_keys(username)
-        sleep(2)
+class generate_key(Basepage):
+    url = 'http://lancer.host.3rdex.com/account/key-gen'
+    key_page_title = (By.LINK_TEXT,'Enter your public key or click')
+    key_pairs_exp = (By.CSS_SELECTOR, '.color-text-primary')
 
-    def click_signup_liaoyuan(self):
-        self.wait_locator(self.signup_liaoyuan_button)
-        signup_button = self.driver.find_element(*self.signup_liaoyuan_button)
-        signup_button.click()
-        sleep(2)"""
-
+    def verify_key_page(self):
+        assert self.driver.current_url == 'http://lancer.host.3rdex.com/account/key-gen', "cannot find key page"
+        key_title = self.wait_locator(self.key_page_title)
+        key_pairs = self.wait_locator(self.key_pairs_exp) """
 
 
 

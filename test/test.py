@@ -29,13 +29,19 @@ class TestLiaoyuan(unittest.TestCase):
         eos_page.verify_ram_eos()
         eos_page.click_create()
 
-    def test_3rdex_login(self):
+    def test_3rdex_signup(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
         signup_page.name_generation()
         signup_page.name_text()
+        assert signup_page.name_text(), ""
+        ##signup_page.next_step()
 
-
+    def xtest_key_generation(self):
+        self.driver.get("http://lancer.host.3rdex.com/account/key-gen")
+        key_generate_page = page.generate_key(self.driver)
+        key_generate_page.verify_key_page()
+        
 if __name__ == "__main__":
     unittest.main() # run all tests
