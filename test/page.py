@@ -52,9 +52,10 @@ class signup_3rdex(Basepage):
     signup_page_title = (By.LINK_TEXT,'New Account')
     eos_account_creation = (By.CSS_SELECTOR, '.color-text-primary')
     username_generation = (By.CSS_SELECTOR,'.src-Screens-___AccountScreen__random-generation___1g3pF > span')
-    username_textfield = (By.CSS_SELECTOR, '.src-Components-Account-___AccountNameInput__input___1Ym0q')
+    username_textfield = (By.CSS_SELECTOR, 'input.src-Components-Account-___AccountNameInput__input___1Ym0q')
     checkbox_click = (By.CSS_SELECTOR, "input[type='checkbox']")
     next_button = (By.CSS_SELECTOR, '.primary-button-container')
+    toast_error = (By.CSS_SELECTOR, '.Toastify')
 
     def verify_signup_page(self):
         assert self.driver.current_url == 'http://lancer.host.3rdex.com/account/create', "cannot find signup page"
@@ -69,16 +70,20 @@ class signup_3rdex(Basepage):
 
     def name_text(self):  
         self.wait_locator(self.username_textfield)
-        name_text_field = self.driver.find_element(*self.username_textfield)
-        return name_text_field.value
-        sleep(2)
-        
-    def toast_text(self):
-        pass
+        text_generation = self.driver.find_element(*self.username_textfield)
+        return text_generation.get_attribute('value')
 
     def input_name(self, text):
-        # change name input value
-        pass
+        self.wait_locator(self.username_textfield)
+        name_text_field = self.driver.find_element(*self.username_textfield)
+        name_text_field.clear()
+        name_text_field.send_keys(text)
+        
+    def toast_text(self):
+        self.wait_locator(self.toast_error)
+        toast_error_alert = self.driver.find_element(*self.toast_error)
+        alert_text = toast_error_alert.text
+        sleep(2)
     
     def click_next(self):
         click_next = self.driver.find_element(*self.next_button)
@@ -87,27 +92,18 @@ class signup_3rdex(Basepage):
     def click_agree_term(self):
         checkbox_selected = self.driver.find_element(*self.checkbox_click)
         checkbox_selected.click()
+        return checkbox_selected.is_selected()
         
-    def term_status(self):
-        checkbox_selected = self.driver.find_element(*self.checkbox_click)
-        #return checkbox_selected.checked?
-
-    """def next_click(self):
-        checkbox_selected = self.driver.find_element(*self.checkbox_click)
-        checkbox_selected.click()
-        self.wait_locator(self.next_button)
-        click_next = self.driver.find_element(*self.next_button)
-        click_next.click()
-
 class generate_key(Basepage):
     url = 'http://lancer.host.3rdex.com/account/key-gen'
-    key_page_title = (By.LINK_TEXT,'Enter your public key or click')
+    key_page_title = (By.CSS_SELECTOR,'.src-Screens-Account-___KeyGenScreen__header-text___28f_l')
     key_pairs_exp = (By.CSS_SELECTOR, '.color-text-primary')
 
     def verify_key_page(self):
         assert self.driver.current_url == 'http://lancer.host.3rdex.com/account/key-gen', "cannot find key page"
         key_title = self.wait_locator(self.key_page_title)
-        key_pairs = self.wait_locator(self.key_pairs_exp) """
+        key_pairs = self.wait_locator(self.key_pairs_exp) 
+
 
 
 

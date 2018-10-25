@@ -29,13 +29,42 @@ class TestLiaoyuan(unittest.TestCase):
         eos_page.verify_ram_eos()
         eos_page.click_create()
 
-    def test_3rdex_signup(self):
+    def xtest_3rdex_signup_generate_name(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
-        signup_page.name_generation()
-        signup_page.name_text()
-        assert signup_page.name_text(), ""
+        name_length = len(signup_page.name_text())
+        assert name_length == 12, "Name generation error"
+
+    def xtest_signup_with_name_and_term_should_goto_key_page(self):
+        self.driver.get("http://lancer.host.3rdex.com/account/create")
+        signup_page = page.signup_3rdex(self.driver)
+        valid_name = signup_page.name_text()
+        signup_page.click_agree_term()
+        signup_page.click_next()
+        verify_next_page = page.generate_key(self.driver)
+        verify_next_page.verify_key_page()
+
+    def xtest_3rdex_signup_with_invalid_name_and_term_should_show_error_toast(self):
+        self.driver.get("http://lancer.host.3rdex.com/account/create")
+        signup_page = page.signup_3rdex(self.driver)
+        invalid_name = signup_page.input_name("edrf0000")
+        signup_page.click_agree_term()
+        signup_page.click_next()
+        signup_page.toast_text()
+
+    def test_3rdex_signup_with_name_without_term_should_show_error_toast(self):
+        self.driver.get("http://lancer.host.3rdex.com/account/create")
+        signup_page = page.signup_3rdex(self.driver)
+        valid_name = signup_page.name_text()
+        ##signup_page.click_agree_term()
+        signup_page.click_next()
+        signup_page.toast_text()
+
+
+
+
+        
         ##signup_page.next_step()
 
     def xtest_key_generation(self):
