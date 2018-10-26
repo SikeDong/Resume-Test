@@ -53,7 +53,7 @@ class TestLiaoyuan(unittest.TestCase):
         signup_page.click_next()
         signup_page.toast_text()
 
-    def test_3rdex_signup_with_name_without_term_should_show_error_toast(self):
+    def xtest_3rdex_signup_with_name_without_term_should_show_error_toast(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         valid_name = signup_page.name_text()
@@ -61,16 +61,86 @@ class TestLiaoyuan(unittest.TestCase):
         signup_page.click_next()
         signup_page.toast_text()
 
+    def xtest_3rdex_signup_generate_key(self):
+        self.driver.get("http://lancer.host.3rdex.com/account/create")
+        signup_page = page.signup_3rdex(self.driver)
+        valid_name = signup_page.name_text()
+        signup_page.click_agree_term()
+        signup_page.click_next()
+        verify_next_page = page.generate_key(self.driver)
+        verify_next_page.verify_key_page()
 
+        ##self.driver.get("http://lancer.host.3rdex.com/account/key-gen")
+        key_page = page.generate_key(self.driver)
+        key_page.verify_key_page()
+        key_page.key_generation()
+        key_length = len(key_page.key_text())
+        assert key_length == 51, "Key generation error"
 
+    def test_signup_with_key_should_goto_payment_page(self):
+        self.driver.get("http://lancer.host.3rdex.com/account/create")
+        signup_page = page.signup_3rdex(self.driver)
+        valid_name = signup_page.name_text()
+        signup_page.click_agree_term()
+        signup_page.click_next()
+        verify_next_page = page.generate_key(self.driver)
+        verify_next_page.verify_key_page()
 
-        
-        ##signup_page.next_step()
+        ##self.driver.get("http://lancer.host.3rdex.com/account/key-gen")
+        key_page = page.generate_key(self.driver)
+        key_page.key_generation()
+        valid_key = key_page.key_text()
+        key_page.click_next_button()
+        key_page.article_reminder()
+        key_page.reminder_button_yes()
+        verify_payment_page = page.payment(self.driver)
+        verify_payment_page.verify_payment_page()
 
-    def xtest_key_generation(self):
-        self.driver.get("http://lancer.host.3rdex.com/account/key-gen")
-        key_generate_page = page.generate_key(self.driver)
-        key_generate_page.verify_key_page()
+    def test_signup_with_key_but_without_safety_should_not_goto_payment_page(self):
+        self.driver.get("http://lancer.host.3rdex.com/account/create")
+        signup_page = page.signup_3rdex(self.driver)
+        valid_name = signup_page.name_text()
+        signup_page.click_agree_term()
+        signup_page.click_next()
+        verify_next_page = page.generate_key(self.driver)
+        verify_next_page.verify_key_page()
+
+        ##self.driver.get("http://lancer.host.3rdex.com/account/key-gen")
+        key_page = page.generate_key(self.driver)
+        key_page.key_generation()
+        valid_key = key_page.key_text()
+        key_page.click_next_button()
+        key_page.article_reminder()
+        key_page.reminer_button_no()
+
+    def test_3rdex_key_with_invalid_key_and_should_show_error_toast(self):
+        self.driver.get("http://lancer.host.3rdex.com/account/create")
+        signup_page = page.signup_3rdex(self.driver)
+        valid_name = signup_page.name_text()
+        signup_page.click_agree_term()
+        signup_page.click_next()
+        verify_next_page = page.generate_key(self.driver)
+        verify_next_page.verify_key_page()
+
+        ##self.driver.get("http://lancer.host.3rdex.com/account/key-gen")
+        key_page = page.generate_key(self.driver)
+        invalid_key = key_page.input_key("edrf0000")
+        key_page.click_next()
+        key_page.toast_text()
+
+    def xtest_3rdex_without_key_should_show_error_toast(self):
+        self.driver.get("http://lancer.host.3rdex.com/account/create")
+        signup_page = page.signup_3rdex(self.driver)
+        valid_name = signup_page.name_text()
+        signup_page.click_agree_term()
+        signup_page.click_next()
+        verify_next_page = page.generate_key(self.driver)
+        verify_next_page.verify_key_page()
+
+        ##self.driver.get("http://lancer.host.3rdex.com/account/key-gen")
+        key_page = page.generate_key(self.driver)
+        key_page.click_next_button()
+        key_page.toast_text()
         
 if __name__ == "__main__":
     unittest.main() # run all tests

@@ -86,8 +86,8 @@ class signup_3rdex(Basepage):
         sleep(2)
     
     def click_next(self):
-        click_next = self.driver.find_element(*self.next_button)
-        click_next.click()
+        click_next_button = self.driver.find_element(*self.next_button)
+        click_next_button.click()
     
     def click_agree_term(self):
         checkbox_selected = self.driver.find_element(*self.checkbox_click)
@@ -98,14 +98,71 @@ class generate_key(Basepage):
     url = 'http://lancer.host.3rdex.com/account/key-gen'
     key_page_title = (By.CSS_SELECTOR,'.src-Screens-Account-___KeyGenScreen__header-text___28f_l')
     key_pairs_exp = (By.CSS_SELECTOR, '.color-text-primary')
+    generate_key = (By.CSS_SELECTOR, '.general-button-container.src-Screens-Account-___KeyGenScreen__generate-key-button___3rz0_')
+    key_pairs = (By.CSS_SELECTOR,'.src-Screens-Account-___KeyGenScreen__private-key___1KDma')
+    key_textfield = (By.CSS_SELECTOR, '.src-Screens-Account-___KeyGenScreen__public-key___1-Nnn')
+    next_step = (By.CSS_SELECTOR, '.primary-button-container')
+    toast_error_key = (By.CSS_SELECTOR, '.Toastify')
+    next_reminder = (By.CSS_SELECTOR, '.src-Screens-Account-___KeyGenScreen__alert-container___2q_Wl')
+    alert_action_yes = (By.CSS_SELECTOR, '.src-Screens-Account-___KeyGenScreen__alert-actions___1LuH9 > div')
+    alert_action_no = (By.LINK_TEXT, "No, I have't")
 
     def verify_key_page(self):
         assert self.driver.current_url == 'http://lancer.host.3rdex.com/account/key-gen', "cannot find key page"
         key_title = self.wait_locator(self.key_page_title)
-        key_pairs = self.wait_locator(self.key_pairs_exp) 
+        key_pairs = self.wait_locator(self.key_pairs_exp)
 
+    def key_generation(self): 
+        self.wait_locator(self.generate_key)
+        new_key_pair = self.driver.find_element(*self.generate_key)
+        new_key_pair.click()
+        sleep(2)
 
+    def key_text(self):  
+        self.wait_locator(self.key_textfield)
+        key_pair_generation = self.driver.find_element(*self.key_textfield)
+        
+        self.wait_locator(self.key_pairs)
+        key_pair_results = self.driver.find_element(*self.key_pairs)
+        return key_pair_results.text
 
+    def input_key(self, text):
+        self.wait_locator(self.key_textfield)
+        key_text_field = self.driver.find_element(*self.key_textfield)
+        ##key_text_field.clear()
+        key_text_field.send_keys(text)
+        
+    def toast_text(self):
+        self.wait_locator(self.toast_error_key)
+        toast_error_key_alert = self.driver.find_element(*self.toast_error_key)
+        key_alert_text = toast_error_key_alert.text
+        sleep(2)
+    
+    def click_next_button(self):
+        click_next_step = self.driver.find_element(*self.next_step)
+        click_next_step.click()
 
+    def article_reminder(self):
+        self.wait_locator(self.next_reminder)
+        reminder_hint = self.driver.find_element(*self.next_reminder)
+        reminder_article = reminder_hint.text
+        sleep(2)
+    
+    def reminder_button_yes(self):
+        alert_button_yes = self.driver.find_element(*self.alert_action_yes)
+        alert_button_yes.click()
 
+    def reminder_button_no(self):
+        alert_button_no = self.driver.find_element(*self.alert_action_no)
+        alert_button_no.click()
+
+class payment(Basepage):
+    url = 'http://lancer.host.3rdex.com/account/payment/5bd344db2ecbfa4d9f0a8275'
+    payment_page_title = (By.CSS_SELECTOR,'.src-Screens-Account-___PaymentScreen__title___uyJ5l')
+    payment_exp = (By.CSS_SELECTOR, '.src-Components-Account-___AccountStageInfo__page-summary___3I4gd')
+
+    def verify_payment_page(self):
+        assert self.driver.current_url == 'http://lancer.host.3rdex.com/account/payment/5bd344db2ecbfa4d9f0a8275', "cannot find key page"
+        payment_title = self.wait_locator(self.kpayment_page_title)
+        payment_text = self.wait_locator(self.payment_exp)
     
