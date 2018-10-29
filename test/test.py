@@ -74,10 +74,11 @@ class TestLiaoyuan(unittest.TestCase):
         key_page = page.generate_key(self.driver)
         key_page.verify_key_page()
         key_page.key_generation()
+        valid_key = key_page.key_text()
         key_length = len(key_page.key_text())
-        assert key_length == 51, "Key generation error"
+        assert key_length == 51, "Key generation error" 
 
-    def test_signup_with_key_should_goto_payment_page(self):
+    def xtest_signup_with_key_should_goto_payment_page(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         valid_name = signup_page.name_text()
@@ -93,8 +94,8 @@ class TestLiaoyuan(unittest.TestCase):
         key_page.click_next_button()
         key_page.article_reminder()
         key_page.reminder_button_yes()
-        verify_payment_page = page.payment(self.driver)
-        verify_payment_page.verify_payment_page()
+        payment_information = page.payment(self.driver)
+        payment_information.verify_payment_page()
 
     def test_signup_with_key_but_without_safety_should_not_goto_payment_page(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
@@ -111,9 +112,10 @@ class TestLiaoyuan(unittest.TestCase):
         valid_key = key_page.key_text()
         key_page.click_next_button()
         key_page.article_reminder()
-        key_page.reminer_button_no()
+        key_page.reminder_button_no()
+        key_page.verify_key_pairs_page()
 
-    def test_3rdex_key_with_invalid_key_and_should_show_error_toast(self):
+    def xtest_3rdex_key_with_invalid_owner_key_and_should_show_error_toast(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         valid_name = signup_page.name_text()
@@ -124,8 +126,25 @@ class TestLiaoyuan(unittest.TestCase):
 
         ##self.driver.get("http://lancer.host.3rdex.com/account/key-gen")
         key_page = page.generate_key(self.driver)
-        invalid_key = key_page.input_key("edrf0000")
-        key_page.click_next()
+        owner_key = key_page.input_owner_key("EOS7NGjfHqHHCS1auyvyckhqF3SGK9vR7my89yDk2uCGk4RWHUkaC")
+        active_key = key_page.input_active_key("ssswe3r")
+        key_page.click_next_button()
+        key_page.toast_text()
+    
+    def xtest_3rdex_key_with_invalid_active_key_and_should_show_error_toast(self):
+        self.driver.get("http://lancer.host.3rdex.com/account/create")
+        signup_page = page.signup_3rdex(self.driver)
+        valid_name = signup_page.name_text()
+        signup_page.click_agree_term()
+        signup_page.click_next()
+        verify_next_page = page.generate_key(self.driver)
+        verify_next_page.verify_key_page()
+
+        ##self.driver.get("http://lancer.host.3rdex.com/account/key-gen")
+        key_page = page.generate_key(self.driver)
+        owner_key = key_page.input_owner_key("wederef")
+        active_key = key_page.input_active_key("EOS8Rri65Qk5YF6j6NVZPnp3Jay2r114sUdhX2EeSPLcGkfP7ykCW")
+        key_page.click_next_button()
         key_page.toast_text()
 
     def xtest_3rdex_without_key_should_show_error_toast(self):
@@ -139,8 +158,31 @@ class TestLiaoyuan(unittest.TestCase):
 
         ##self.driver.get("http://lancer.host.3rdex.com/account/key-gen")
         key_page = page.generate_key(self.driver)
+        ##valid_key = key_page.key_text()
         key_page.click_next_button()
         key_page.toast_text()
+
+    def xtest_3rdex_payment(self):
+        self.driver.get("http://lancer.host.3rdex.com/account/create")
+        signup_page = page.signup_3rdex(self.driver)
+        valid_name = signup_page.name_text()
+        signup_page.click_agree_term()
+        signup_page.click_next()
+        verify_next_page = page.generate_key(self.driver)
+        verify_next_page.verify_key_page()
+
+        ##self.driver.get("http://lancer.host.3rdex.com/account/key-gen")
+        key_page = page.generate_key(self.driver)
+        key_page.key_generation()
+        valid_key = key_page.key_text()
+        key_page.click_next_button()
+        key_page.article_reminder()
+        key_page.reminder_button_yes()
+
+        payment_information = page.payment(self.driver)
+        payment_information.verify_payment_page()
+        payment_information.click_credit_to_pay()
+        payment_information.credit_card_information()
         
 if __name__ == "__main__":
     unittest.main() # run all tests
