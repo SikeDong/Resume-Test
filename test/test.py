@@ -97,7 +97,7 @@ class TestLiaoyuan(unittest.TestCase):
         payment_information = page.payment(self.driver)
         payment_information.verify_payment_page()
 
-    def test_signup_with_key_but_without_safety_should_not_goto_payment_page(self):
+    def xtest_signup_with_key_but_without_safety_should_not_goto_payment_page(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         valid_name = signup_page.name_text()
@@ -113,7 +113,7 @@ class TestLiaoyuan(unittest.TestCase):
         key_page.click_next_button()
         key_page.article_reminder()
         key_page.reminder_button_no()
-        key_page.verify_key_pairs_page()
+        key_page.verify_key_page()
 
     def xtest_3rdex_key_with_invalid_owner_key_and_should_show_error_toast(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
@@ -157,12 +157,11 @@ class TestLiaoyuan(unittest.TestCase):
         verify_next_page.verify_key_page()
 
         ##self.driver.get("http://lancer.host.3rdex.com/account/key-gen")
-        key_page = page.generate_key(self.driver)
-        ##valid_key = key_page.key_text()
+        verify_next_page = page.generate_key(self.driver)
         key_page.click_next_button()
         key_page.toast_text()
 
-    def xtest_3rdex_payment(self):
+    def test_3rdex_payment_by_credit_card(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         valid_name = signup_page.name_text()
@@ -178,11 +177,102 @@ class TestLiaoyuan(unittest.TestCase):
         key_page.click_next_button()
         key_page.article_reminder()
         key_page.reminder_button_yes()
+        payment_information = page.payment(self.driver)
+        payment_information.verify_payment_page()
 
         payment_information = page.payment(self.driver)
         payment_information.verify_payment_page()
         payment_information.click_credit_to_pay()
         payment_information.credit_card_information()
-        
+        email_address = payment_information.credit_card_email("dfdrfv@gmail.com")
+        credit_card = payment_information.credit_card_number("4242 4242 4242 4242")
+        expire_date = payment_information.credit_card_date("09/20")
+        cvc_code = payment_information.credit_card_cvc("123")
+        zip_code = payment_information.credit_card_zip("12345")
+        payment_information.credit_card_pay_button()
+        payment_successful_page = page.payment_successful(self.driver)
+        payment_successful_page.verify_payment_page()
+
+    def test_3rdex_payment_by_friend_link(self):
+        self.driver.get("http://lancer.host.3rdex.com/account/create")
+        signup_page = page.signup_3rdex(self.driver)
+        valid_name = signup_page.name_text()
+        signup_page.click_agree_term()
+        signup_page.click_next()
+        verify_next_page = page.generate_key(self.driver)
+        verify_next_page.verify_key_page()
+
+        ##self.driver.get("http://lancer.host.3rdex.com/account/key-gen")
+        key_page = page.generate_key(self.driver)
+        key_page.key_generation()
+        valid_key = key_page.key_text()
+        key_page.click_next_button()
+        key_page.article_reminder()
+        key_page.reminder_button_yes()
+        payment_information = page.payment(self.driver)
+        payment_information.verify_payment_page()
+
+        payment_information = page.payment(self.driver)
+        payment_information.verify_payment_page()
+        payment_information.pay_by_friend()
+        payment_information.link_to_friend()
+        payment_information.toast_link_text()
+        payment_information.verify_payment_page()
+
+    def test_3rdex_payment_by_friend_email(self):
+        self.driver.get("http://lancer.host.3rdex.com/account/create")
+        signup_page = page.signup_3rdex(self.driver)
+        valid_name = signup_page.name_text()
+        signup_page.click_agree_term()
+        signup_page.click_next()
+        verify_next_page = page.generate_key(self.driver)
+        verify_next_page.verify_key_page()
+
+        ##self.driver.get("http://lancer.host.3rdex.com/account/key-gen")
+        key_page = page.generate_key(self.driver)
+        key_page.key_generation()
+        valid_key = key_page.key_text()
+        key_page.click_next_button()
+        key_page.article_reminder()
+        key_page.reminder_button_yes()
+        payment_information = page.payment(self.driver)
+        payment_information.verify_payment_page()
+
+        payment_information = page.payment(self.driver)
+        payment_information.verify_payment_page()
+        payment_information.pay_by_friend()
+        payment_information.email_to_friend()
+        payment_information.email_address_input()
+        payment_information.fill_friend_email("dsfefg@gmail.com")
+        payment_information.email_to_friend_button()
+        payment_information.verify_payment_page()
+
+    def test_3rdex_payment_by_friend_email_without_ok(self):
+        self.driver.get("http://lancer.host.3rdex.com/account/create")
+        signup_page = page.signup_3rdex(self.driver)
+        valid_name = signup_page.name_text()
+        signup_page.click_agree_term()
+        signup_page.click_next()
+        verify_next_page = page.generate_key(self.driver)
+        verify_next_page.verify_key_page()
+
+        ##self.driver.get("http://lancer.host.3rdex.com/account/key-gen")
+        key_page = page.generate_key(self.driver)
+        key_page.key_generation()
+        valid_key = key_page.key_text()
+        key_page.click_next_button()
+        key_page.article_reminder()
+        key_page.reminder_button_yes()
+        payment_information = page.payment(self.driver)
+        payment_information.verify_payment_page()
+
+        payment_information = page.payment(self.driver)
+        payment_information.verify_payment_page()
+        payment_information.pay_by_friend()
+        payment_information.email_to_friend()
+        payment_information.email_address_input()
+        payment_information.email_to_friend_button()
+        payment_information.toast_email_text()
+
 if __name__ == "__main__":
     unittest.main() # run all tests

@@ -59,8 +59,8 @@ class signup_3rdex(Basepage):
 
     def verify_signup_page(self):
         assert self.driver.current_url == 'http://lancer.host.3rdex.com/account/create', "cannot find signup page"
-        signup_title = self.wait_locator(self.signup_page_title)
-        eos_account_exp = self.wait_locator(self.eos_account_creation) 
+        signup_title = self.driver.find_element(*self.signup_page_title)
+        eos_account_exp = self.driver.find_element(*self.eos_account_creation) 
 
     def name_generation(self): 
         self.wait_locator(self.username_generation)
@@ -98,7 +98,6 @@ class generate_key(Basepage):
     url = 'http://lancer.host.3rdex.com/account/key-gen'
     key_page_title = (By.CSS_SELECTOR,'.src-Screens-Account-___KeyGenScreen__header-text___28f_l')
     key_pairs_exp = (By.CSS_SELECTOR, '.color-text-primary')
-    key_pair_page_element = (By.CSS_SELECTOR, '.src-Screens-Account-___KeyGenScreen__go-back___k4MYf')
     generate_key = (By.CSS_SELECTOR, '.general-button-container.src-Screens-Account-___KeyGenScreen__generate-key-button___3rz0_')
     key_pairs = (By.CSS_SELECTOR,'.src-Screens-Account-___KeyGenScreen__private-key___1KDma')
     key_textfield = (By.CSS_SELECTOR, '.src-Screens-Account-___KeyGenScreen__public-key___1-Nnn')
@@ -111,16 +110,9 @@ class generate_key(Basepage):
 
     def verify_key_page(self):
         assert self.driver.current_url == 'http://lancer.host.3rdex.com/account/key-gen', "cannot find key page"
-        key_title = self.wait_locator(self.key_page_title)
-        key_pairs = self.wait_locator(self.key_pairs_exp)
+        key_pair_title = self.driver.find_element(*self.key_page_title)
+        key_pairs_text = self.driver.find_element(*self.key_pairs_exp)
     
-    def verify_key_pairs_page(self):
-        assert self.driver.current_url == 'http://lancer.host.3rdex.com/account/key-gen', "cannot find key pair page"
-        ##key_pair_title = self.wait_locator(self.key_page_title)
-        ##key_pairs_text = self.wait_locator(self.key_pairs_exp)
-        self.wait_locator(self.key_pair_page_element)
-        key_pairs_page_verification = self.driver.find_element(*self.key_pair_page_element)
-
     def key_generation(self): 
         self.wait_locator(self.generate_key)
         new_key_pair = self.driver.find_element(*self.generate_key)
@@ -178,12 +170,25 @@ class payment(Basepage):
     payment_page_title = (By.CSS_SELECTOR,'.src-Screens-Account-___PaymentScreen__title___uyJ5l')
     payment_exp = (By.CSS_SELECTOR, '.src-Components-Account-___AccountStageInfo__page-summary___3I4gd')
     credit_card_button = (By.CSS_SELECTOR, '.primary-button-container.active.src-Screens-Account-___PaymentScreen__pay-usd-button___1KdYo')
-    fill_payment_informaton = (By.CSS_SELECTOR, '.Modal-animationWrapper')
+    fill_payment_informaton = (By.CSS_SELECTOR, '.Modal')
+    payment_email = (By.CSS_SELECTOR, 'input[type = "email"]')
+    payment_card_number = (By.CSS_SELECTOR, 'input[type = "tel"]')
+    payment_date = (By.CSS_SELECTOR, 'input[placeholder="MM / YY"]')
+    payment_cvc= (By.CSS_SELECTOR, 'input[placeholder="CVC"]')
+    payment_zip_code =(By.CSS_SELECTOR, 'input[placeholder="ZIP Code"]')
+    payment_button = (By.CSS_SELECTOR, '.Button-animationWrapper-child--primary.Button')
+    payment_friend = (By.CSS_SELECTOR, '.general-button-container.src-Screens-Account-___PaymentScreen__send-link-button___2JXNR')
+    payment_friend_link_email = (By.CSS_SELECTOR, '.src-Screens-Account-___PaymentScreen__action-row___2oy_d')
+    toast_payment = (By.CSS_SELECTOR, '.Toastify')
+    email_address_window = (By.CSS_SELECTOR, '.src-Screens-Account-___PaymentScreen__email-friend-overlay-container___zm1qU')
+    friend_email_address_input = (By.CSS_SELECTOR, 'input.general-input')
+    send_email_button = (By.CSS_SELECTOR, 'primary-button-container')
+    toast_email = (By.CSS_SELECTOR, '.Toastify')
 
     def verify_payment_page(self):
         sleep(2)
-        payment_title = self.wait_locator(self.payment_page_title)
-        payment_text = self.wait_locator(self.payment_exp)
+        payment_title = self.driver.find_element(*self.payment_page_title)
+        payment_text = self.driver.find_element(*self.payment_exp)
 
     def click_credit_to_pay(self):
         self.wait_locator(self.credit_card_button)
@@ -191,8 +196,96 @@ class payment(Basepage):
         click_credit_card.click()
 
     def credit_card_information(self):
-        self.wait_locator(self.fill_payment_informaton)
+        self.driver.switch_to.frame('stripe_checkout_app')
         payment_information = self.driver.find_element(*self.fill_payment_informaton)
+
+    def credit_card_email(self,text):
+        payment_email_text_field = self.driver.find_element(*self.payment_email)
+        payment_email_text_field.send_keys(text)
+
+    def credit_card_number(self,text):
+        payment_card_number_text_field = self.driver.find_element(*self.payment_card_number)
+        payment_card_number_text_field.send_keys(text)
+
+    def credit_card_date(self,text):
+        payment_date_text_field = self.driver.find_element(*self.payment_date)
+        payment_date_text_field.send_keys(text)
+
+    def credit_card_cvc(self,text):
+        payment_cvc_text_field = self.driver.find_element(*self.payment_cvc)
+        payment_cvc_text_field.send_keys(text)
+
+    def credit_card_zip(self,text):
+        payment_zip_text_field = self.driver.find_element(*self.payment_zip_code)
+        payment_zip_text_field.send_keys(text)
+
+    def credit_card_pay_button(self):
+        payment_button_click = self.driver.find_element(*self.payment_button)
+        payment_button_click.click()
+
+    def pay_by_friend(self):
+        friend_payment = self.driver.find_element(*self.payment_friend)
+        friend_payment.click()
+
+    def link_to_friend(self):
+        self.wait_locator(self.payment_friend_link_email)
+        for link_friend in self.driver.find_elements(*self.payment_friend_link_email):
+            if link_friend.text == "Copy the Link":
+                link_friend.click()
+            
+    def toast_link_text(self):
+        self.wait_locator(self.toast_payment)
+        toast_link_alert = self.driver.find_element(*self.toast_payment)
+        link_alert_text = toast_link_alert.text
+        sleep(2)
+
+    def email_to_friend(self):
+        self.wait_locator(self.payment_friend_link_email)
+        for email_friend in self.driver.find_elements(*self.payment_friend_link_email):
+            if email_friend.text == "Email my Friend":
+                email_friend.click()
+
+    def email_address_input(self):
+        self.driver.switch_to.frame('stripe_checkout_app')
+        self.wait_locator(self.email_address_window)
+        friend_email_input_place = self.driver.find_element(*self.email_address_window)
+
+    def fill_friend_email(self,text):
+        self.wait_locator(self.friend_email_address_input)
+        friend_email_input = self.driver.find_element(*self.friend_email_address_input)
+        friend_email_input.send_keys(text)
+
+    def email_to_friend_button(self):
+        send_friend_email = self.driver.find_element(*self.send_email_button)
+        senf_friend_email.click()
+
+    def toast_email_text(self):
+        self.wait_locator(self.toast_email)
+        toast_email_alert = self.driver.find_element(*self.toast_email)
+        email_alert_text = toast_email_alert.text
+        sleep(2)
+
+class payment_successful(Basepage):
+    url = 'http://lancer.host.3rdex.com/account/payment/5bd8b72c2ecbfa4d9f0ab962'
+    payment_account_name = (By.CSS_SELECTOR, '.src-Components-Account-___DoneStage__account-name___3oQjx')
+    payment_successful_next = (By.CSS_SELECTOR, '.src-Components-Account-___AccountStageInfo__account-info-stage-container___1SE9N')
+
+    def verify_payment_page(self):
+        sleep(2)
+        self.driver.switch_to.default_content()
+        payment_account = self.driver.find_element(*self.payment_account_name)
+        payment_next = self.driver.find_element(*self. payment_successful_next)
+
+
+
+
+    
+
+
+
+
+
+        
 
 
 
