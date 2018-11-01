@@ -50,7 +50,7 @@ class ram_eos_page(Basepage):
 class signup_3rdex(Basepage):
     url = 'http://lancer.host.3rdex.com/account/create'
     signup_page_title = (By.CSS_SELECTOR,'.src-Screens-___AccountScreen__panel-title___E6XML')
-    signup_explanation = (By.CSS_SELECTOR, '.color-text-primary')
+    signup_explanation = (By.CSS_SELECTOR, '.src-Components-Account-___AccountStageInfo__account-info-stage-container___1SE9N')
     username_generation = (By.CSS_SELECTOR,'.src-Screens-___AccountScreen__random-generation___1g3pF > span')
     username_textfield = (By.CSS_SELECTOR, 'input.src-Components-Account-___AccountNameInput__input___1Ym0q')
     checkbox_click = (By.CSS_SELECTOR, "input[type='checkbox']")
@@ -97,7 +97,7 @@ class signup_3rdex(Basepage):
 class generate_key(Basepage):
     url = 'http://lancer.host.3rdex.com/account/key-gen'
     key_page_title = (By.CSS_SELECTOR,'.src-Screens-Account-___KeyGenScreen__header-text___28f_l')
-    key_pairs_exp = (By.CSS_SELECTOR, '.color-text-primary')
+    key_pairs_exp = (By.CSS_SELECTOR, '.src-Components-Account-___AccountStageInfo__page-summary___3I4gd')
     key_generation = (By.CSS_SELECTOR, '.general-button-container.src-Screens-Account-___KeyGenScreen__generate-key-button___3rz0_')
     key_pairs_text = (By.CSS_SELECTOR,'.src-Screens-Account-___KeyGenScreen__private-key___1KDma')
     key_textfield = (By.CSS_SELECTOR, '.src-Screens-Account-___KeyGenScreen__public-key___1-Nnn')

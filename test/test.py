@@ -44,7 +44,7 @@ class TestLiaoyuan(unittest.TestCase):
         name_length = len(signup_page.get_username_text())
         assert name_length == 12, "Name generation error"
 
-    def xtest_signup_with_name_and_term_should_goto_key_page(self):
+    def test_signup_with_name_and_term_should_goto_key_page(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
@@ -216,7 +216,7 @@ class TestLiaoyuan(unittest.TestCase):
         payment_successful_page = page.payment_successful(self.driver)
         payment_successful_page.verify_payment_page()
 
-    def test_3rdex_payment_by_friend_link(self):
+    def xtest_3rdex_payment_by_friend_link(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
