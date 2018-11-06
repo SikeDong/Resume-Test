@@ -9,7 +9,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import page
 
-class TestLiaoyuan(unittest.TestCase):
+class Test3rdex(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Remote(
         command_executor='http://127.0.0.1:4444/wd/hub',
@@ -20,7 +20,7 @@ class TestLiaoyuan(unittest.TestCase):
         self.driver.close()
         pass
 
-    def xtest_3rdex(self):
+    def test_3rdex_main_page(self):
         main_page = page.main_3rdex(self.driver)
         main_page.verify_3rdex_main_page()
         main_page.start_exchange_button()
@@ -29,14 +29,14 @@ class TestLiaoyuan(unittest.TestCase):
         eos_page.verify_ram_eos()
         eos_page.click_create_account()
 
-    def xtest_3rdex_signup_name(self):
+    def test_3rdex_signup_name(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
         name_length = len(signup_page.get_username_text())
         assert name_length == 12, "Name generation error"
 
-    def xtest_3rdex_signup_random_generate_name(self):
+    def test_3rdex_signup_random_generate_name(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
@@ -54,7 +54,7 @@ class TestLiaoyuan(unittest.TestCase):
         verify_next_page = page.generate_key(self.driver)
         verify_next_page.verify_key_page()
 
-    def xtest_3rdex_signup_with_invalid_name_and_term_should_show_error_toast(self):
+    def test_3rdex_signup_with_invalid_name_and_term_should_show_error_toast(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
@@ -63,7 +63,7 @@ class TestLiaoyuan(unittest.TestCase):
         signup_page.click_next_to_key()
         signup_page.toast_text()
 
-    def xtest_3rdex_signup_with_name_without_term_should_show_error_toast(self):
+    def test_3rdex_signup_with_name_without_term_should_show_error_toast(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
@@ -72,7 +72,7 @@ class TestLiaoyuan(unittest.TestCase):
         signup_page.click_next_to_key()
         signup_page.toast_text()
 
-    def xtest_3rdex_signup_generate_key(self):
+    def test_3rdex_signup_generate_key_should_be_successful(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
@@ -90,7 +90,7 @@ class TestLiaoyuan(unittest.TestCase):
         key_length = len(key_page.get_key())
         assert key_length == 51, "Key generation error" 
 
-    def xtest_signup_with_key_should_goto_payment_page(self):
+    def test_signup_with_key_and_confirmation_should_goto_payment_page(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
@@ -111,7 +111,7 @@ class TestLiaoyuan(unittest.TestCase):
         payment_information = page.payment(self.driver)
         payment_information.verify_payment_page()
 
-    def xtest_signup_with_key_but_without_safety_should_not_goto_payment_page(self):
+    def test_signup_with_key_but_without_confirmation_should_not_goto_payment_page(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
@@ -131,7 +131,7 @@ class TestLiaoyuan(unittest.TestCase):
         key_page.reminder_button_no()
         key_page.verify_key_page()
 
-    def xtest_3rdex_key_with_invalid_owner_key_and_should_show_error_toast(self):
+    def test_3rdex_signup_but_with_invalid_owner_key_should_show_error_toast(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
@@ -149,7 +149,7 @@ class TestLiaoyuan(unittest.TestCase):
         key_page.click_next_to_payment()
         key_page.toast_text()
     
-    def xtest_3rdex_key_with_invalid_active_key_and_should_show_error_toast(self):
+    def test_3rdex_signup_but_with_invalid_active_key_should_show_error_toast(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
@@ -166,7 +166,7 @@ class TestLiaoyuan(unittest.TestCase):
         key_page.click_next_to_payment()
         key_page.toast_text()
 
-    def xtest_3rdex_without_key_should_show_error_toast(self):
+    def test_3rdex_signup_without_key_should_show_error_toast(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
@@ -182,7 +182,7 @@ class TestLiaoyuan(unittest.TestCase):
         key_page.click_next_to_payment()
         key_page.toast_text()
 
-    def xtest_3rdex_payment_by_credit_card(self):
+    def test_3rdex_payment_by_credit_card(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
@@ -207,7 +207,7 @@ class TestLiaoyuan(unittest.TestCase):
         payment_information.verify_payment_page()
         payment_information.click_credit_card_to_pay()
         payment_information.credit_card_information()
-        email_address = payment_information.credit_card_email("dfdrfv@gmail.com")
+        email_address = payment_information.credit_card_email("dfdrfv@example.com")
         credit_card = payment_information.credit_card_number("4242 4242 4242 4242")
         expire_date = payment_information.credit_card_date("09/20")
         cvc_code = payment_information.credit_card_cvc("123")
@@ -243,7 +243,7 @@ class TestLiaoyuan(unittest.TestCase):
         payment_information.toast_link_text()
         payment_information.verify_payment_page()
 
-    def xtest_3rdex_payment_by_friend_email(self):
+    def test_3rdex_payment_by_friend_email(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()
@@ -268,11 +268,11 @@ class TestLiaoyuan(unittest.TestCase):
         payment_information.pay_by_friend()
         payment_information.email_to_friend()
         payment_information.friend_email_address()
-        payment_information.fill_friend_email("dsfefg@gmail.com")
+        payment_information.fill_friend_email("dsfefg@example.com")
         payment_information.click_email_to_friend_button()
         payment_information.verify_payment_page()
 
-    def xtest_3rdex_payment_by_friend_email_without_ok(self):
+    def test_3rdex_payment_by_friend_email_without_confirmation_to_send(self):
         self.driver.get("http://lancer.host.3rdex.com/account/create")
         signup_page = page.signup_3rdex(self.driver)
         signup_page.verify_signup_page()

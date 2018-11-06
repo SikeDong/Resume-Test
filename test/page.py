@@ -33,8 +33,8 @@ class ram_eos_page(Basepage):
     eos_logo_locator = (By.CSS_SELECTOR, '.src-Components-___SideNav__app-logo___2pFZc')
     market_price_chart_locator = (By.CSS_SELECTOR, '.src-Components-RamExchange-___RamPriceHistory__ram-price-history-container___2DJXK') 
     hidden_component_locator = (By.CSS_SELECTOR, 'div > section.hide-lt-md.src-Components-___SideNav__app-side-nav___2zRkt') 
-    signup_button_locator =(By.LINK_TEXT, 'Create Account')
-
+    signup_button_locator =(By.LINK_TEXT, 'Create Account') 
+    
     def verify_ram_eos(self):
         assert self.driver.current_url == 'http://lancer.host.3rdex.com/ram-eos', "cannot find ram eos"
         eos_logo = self.wait_locator(self.eos_logo_locator)
