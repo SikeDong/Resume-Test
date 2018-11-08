@@ -24,15 +24,15 @@ class main_3rdex(Basepage):
         page_logo = self.wait_locator(self.logo_locator)
 
     def start_exchange_button(self):
-        start_change = self.driver.find_element_by_css_selector('.src-Screens-Landing-___PosterSection__ram-exchange-beta-btn___3j2NU')
+        start_change = self.driver.find_element_by_css_selector('.ram-exchange-beta')
         start_change.click()
         sleep(2)
 
 class ram_eos_page(Basepage):
     url = 'http://lancer.host.3rdex.com/ram-eos'
-    eos_logo_locator = (By.CSS_SELECTOR, '.src-Components-___SideNav__app-logo___2pFZc')
-    market_price_chart_locator = (By.CSS_SELECTOR, '.src-Components-RamExchange-___RamPriceHistory__ram-price-history-container___2DJXK') 
-    hidden_component_locator = (By.CSS_SELECTOR, 'div > section.hide-lt-md.src-Components-___SideNav__app-side-nav___2zRkt') 
+    eos_logo_locator = (By.CSS_SELECTOR, '.logo-3rdex.src-Components-___SideNav__app-logo-container___2pDpM')
+    market_price_chart_locator = (By.CSS_SELECTOR, '.market-price-chart.src-Components-RamExchange-___RamPriceHistory__ram-price-history-container___2DJXK') 
+    hidden_component_locator = (By.CSS_SELECTOR, '.hide-lt-md.sidebar-navigation.src-Components-___SideNav__app-side-nav___2zRkt') 
     signup_button_locator =(By.LINK_TEXT, 'Create Account') 
     
     def verify_ram_eos(self):
@@ -49,12 +49,12 @@ class ram_eos_page(Basepage):
     
 class signup_3rdex(Basepage):
     url = 'http://lancer.host.3rdex.com/account/create'
-    signup_page_title = (By.CSS_SELECTOR,'.src-Screens-___AccountScreen__panel-title___E6XML')
-    signup_explanation = (By.CSS_SELECTOR, '.src-Components-Account-___AccountStageInfo__account-info-stage-container___1SE9N')
-    username_generation = (By.CSS_SELECTOR,'.src-Screens-___AccountScreen__random-generation___1g3pF > span')
-    username_textfield = (By.CSS_SELECTOR, 'input.src-Components-Account-___AccountNameInput__input___1Ym0q')
+    signup_page_title = (By.CSS_SELECTOR,'.new-account.src-Screens-___AccountScreen__panel-title___E6XML')
+    signup_explanation = (By.CSS_SELECTOR, '.introduction-details.src-Components-Account-___AccountStageInfo__page-summary___3I4gd')
+    username_generation = (By.CSS_SELECTOR,'.eos-random-generate.src-Screens-___AccountScreen__random-generation___1g3pF')
+    username_textfield = (By.CSS_SELECTOR, '.new-account-name-input.src-Components-Account-___AccountNameInput__input___1Ym0q')
     checkbox_click = (By.CSS_SELECTOR, "input[type='checkbox']")
-    next_button_to_key = (By.CSS_SELECTOR, '.primary-button-container')
+    next_button_to_key = (By.CSS_SELECTOR, '.flexible-button.primary-button-container ')
     toast_error_username = (By.CSS_SELECTOR, '.Toastify')
 
     def verify_signup_page(self):
@@ -96,17 +96,18 @@ class signup_3rdex(Basepage):
         
 class generate_key(Basepage):
     url = 'http://lancer.host.3rdex.com/account/key-gen'
-    key_page_title = (By.CSS_SELECTOR,'.src-Screens-Account-___KeyGenScreen__header-text___28f_l')
-    key_pairs_exp = (By.CSS_SELECTOR, '.src-Components-Account-___AccountStageInfo__page-summary___3I4gd')
-    key_generation = (By.CSS_SELECTOR, '.general-button-container.src-Screens-Account-___KeyGenScreen__generate-key-button___3rz0_')
-    key_pairs_text = (By.CSS_SELECTOR,'.src-Screens-Account-___KeyGenScreen__private-key___1KDma')
-    key_textfield = (By.CSS_SELECTOR, '.src-Screens-Account-___KeyGenScreen__public-key___1-Nnn')
+    key_page_title = (By.CSS_SELECTOR,'.key-gen-reminder.src-Screens-Account-___KeyGenScreen__header-text___28f_l')
+    key_pairs_exp = (By.CSS_SELECTOR, '.introduction-details.src-Components-Account-___AccountStageInfo__page-summary___3I4gd')
+    key_generation = (By.CSS_SELECTOR, '.general-button-container.generate-key-pairs-btn.src-Screens-Account-___KeyGenScreen__generate-key-button___3rz0_')
+    key_pairs_text = (By.CSS_SELECTOR,'.active-private-key.src-Screens-Account-___KeyGenScreen__private-key___1KDma')
+    key_textfield = (By.CSS_SELECTOR, '.owner-public-key.src-Screens-Account-___KeyGenScreen__public-key___1-Nnn')
     public_key_textfield = (By.CSS_SELECTOR, '.src-Components-Account-___KeyInput__key-input-container___15QpZ > input[placeholder = "Enter Your Owner Public Key"]')
     active_key_textfield = (By.CSS_SELECTOR, '.src-Components-Account-___KeyInput__key-input-container___15QpZ > input[placeholder = "Enter Your Active Public Key"]')
-    next_button_to_payment = (By.CSS_SELECTOR, '.primary-button-container')
+    next_button_to_payment = (By.CSS_SELECTOR, '.flexible-button.primary-button-container ')
     toast_error_key = (By.CSS_SELECTOR, '.Toastify')
-    reminder_before_payment = (By.CSS_SELECTOR, '.src-Screens-Account-___KeyGenScreen__alert-container___2q_Wl')
-    alert_action = (By.CSS_SELECTOR, '.src-Screens-Account-___KeyGenScreen__alert-actions___1LuH9 > div > p')
+    reminder_before_payment = (By.CSS_SELECTOR, '.alert-container.src-Screens-Account-___KeyGenScreen__alert-container___2q_Wl')
+    alert_action_yes = (By.CSS_SELECTOR, '.alert-actions-yes')
+    alert_action_no = (By.CSS_SELECTOR, '.alert-actions-no')
 
     def verify_key_page(self):
         assert self.driver.current_url == 'http://lancer.host.3rdex.com/account/key-gen', "cannot find key page"
@@ -154,21 +155,19 @@ class generate_key(Basepage):
         sleep(2)
     
     def reminder_button_yes(self):
-        self.wait_locator(self.alert_action)
-        for alert_yes in self.driver.find_elements(*self.alert_action):
-            if alert_yes.text == "Yes, I have":
-                alert_yes.click()
+        self.wait_locator(self.alert_action_yes)
+        alert_yes = self.driver.find_element(*self.alert_action_yes)
+        alert_yes.click()
             
     def reminder_button_no(self):
-        self.wait_locator(self.alert_action)
-        for alert_no in self.driver.find_elements(*self.alert_action):
-            if alert_no.text == "No, I have't":
-                alert_no.click()
-            
+        self.wait_locator(self.alert_action_no)
+        alert_no = self.driver.find_element(*self.alert_action_no)
+        alert_no.click()
+
 class payment(Basepage):
     url = 'http://lancer.host.3rdex.com/account/payment/5bd344db2ecbfa4d9f0a8275'
-    payment_page_title = (By.CSS_SELECTOR,'.src-Screens-Account-___PaymentScreen__title___uyJ5l')
-    payment_exp = (By.CSS_SELECTOR, '.src-Components-Account-___AccountStageInfo__page-summary___3I4gd')
+    payment_page_title = (By.CSS_SELECTOR,'.payment-screen-reminder.src-Screens-Account-___PaymentScreen__title___uyJ5l')
+    payment_exp = (By.CSS_SELECTOR, '.introduction-details.src-Components-Account-___AccountStageInfo__page-summary___3I4gd')
     credit_card_button = (By.CSS_SELECTOR, '.primary-button-container.active.src-Screens-Account-___PaymentScreen__pay-usd-button___1KdYo')
     payment_informaton_filling = (By.CSS_SELECTOR, '.Modal')
     payment_email = (By.CSS_SELECTOR, 'input[type = "email"]')
@@ -177,12 +176,13 @@ class payment(Basepage):
     payment_cvc= (By.CSS_SELECTOR, 'input[placeholder="CVC"]')
     payment_zip_code =(By.CSS_SELECTOR, 'input[placeholder="ZIP Code"]')
     payment_button = (By.CSS_SELECTOR, '.Button-animationWrapper-child--primary.Button')
-    payment_by_friend = (By.CSS_SELECTOR, '.general-button-container.src-Screens-Account-___PaymentScreen__send-link-button___2JXNR')
-    payment_friend_link_or_email = (By.CSS_SELECTOR, '.src-Screens-Account-___PaymentScreen__action-row___2oy_d')
+    payment_by_friend = (By.CSS_SELECTOR, '.general-button-container.forward-button.src-Screens-Account-___PaymentScreen__send-link-button___2JXNR')
+    payment_friend_by_link = (By.CSS_SELECTOR, '.copy-the-link.src-Screens-Account-___PaymentScreen__action-row___2oy_d')
+    payment_friend_by_email = (By.CSS_SELECTOR, '.src-Screens-Account-___PaymentScreen__action-row___2oy_d')
     toast_payment = (By.CSS_SELECTOR, '.Toastify')
-    friend_email_address_window = (By.CSS_SELECTOR, '.src-Screens-Account-___PaymentScreen__email-friend-overlay-container___zm1qU')
-    friend_email_address_input = (By.CSS_SELECTOR, 'input.general-input')
-    send_email_button = (By.CSS_SELECTOR, '.src-Screens-Account-___PaymentScreen__ok-button___1gA0v > div.primary-button-container')
+    friend_email_address_window = (By.CSS_SELECTOR, '.alert-container.src-Screens-Account-___PaymentScreen__email-friend-overlay-container___zm1qU')
+    friend_email_address_input = (By.CSS_SELECTOR, '.general-input.alert-email-address')
+    send_email_button = (By.CSS_SELECTOR, '.flexible-button.primary-button-container ')
     toast_email = (By.CSS_SELECTOR, '.Toastify')
 
     def verify_payment_page(self):
@@ -229,16 +229,12 @@ class payment(Basepage):
         friend_payment.click()
 
     def link_to_friend(self):
-        for copy_link in self.driver.find_elements(*self.payment_friend_link_or_email):
-            if copy_link.text == "Copy the Link":
-                ## print('copy link: ', copy_link.text)
-                ## sleep(2)
-                copy_link.click()
+        copy_link = self.driver.find_element(*self.payment_friend_by_link)
+        copy_link.click()
             
     def email_to_friend(self):
-        for email_friend in self.driver.find_elements(*self.payment_friend_link_or_email):
-            if email_friend.text == "Email my friend":
-                email_friend.click()
+        email_friend = self.driver.find_element(*self.payment_friend_by_email)
+        email_friend.click()
 
     def toast_link_text(self):
         self.wait_locator(self.toast_payment)
@@ -269,8 +265,8 @@ class payment(Basepage):
 
 class payment_successful(Basepage):
     url = 'http://lancer.host.3rdex.com/account/payment/5bd8b72c2ecbfa4d9f0ab962'
-    payment_account_name = (By.CSS_SELECTOR, '.src-Components-Account-___DoneStage__account-name___3oQjx')
-    what_is_next_text = (By.CSS_SELECTOR, '.src-Components-Account-___AccountStageInfo__account-info-stage-container___1SE9N')
+    payment_account_name = (By.CSS_SELECTOR, '.donestage-account-name.src-Components-Account-___DoneStage__account-name___3oQjx')
+    what_is_next_text = (By.CSS_SELECTOR, '.introduction-details.src-Components-Account-___AccountStageInfo__page-summary___3I4gd')
 
     def verify_payment_page(self):
         self.driver.switch_to.default_content()
